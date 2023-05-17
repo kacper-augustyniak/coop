@@ -43,33 +43,15 @@ public class TextBoxStepDefinition {
     }
     @Then ("I should see the \"Text Box\" page")
     public void I_should_see_the_Text_Box_page() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(basePage.getTextBoxHeader()));
-//        driver.getCurrentUrl().equalsIgnoreCase(textBoxUrl);
+        basePage.waitForTextBoxPageIsVisible();
     }
-    @And ("I should see the \"Full Name\" text box")
-    public void I_should_see_the_Full_Name_text_box() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(basePage.getFullName()));
-    }
-    @And ("I should see the \"Email\" text box")
-    public void I_should_see_the_Email_text_box() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(basePage.getUserEmail()));
-    }
-    @And ("I should see the \"Current Address\" text box")
-    public void I_should_see_the_Current_Address_text_box() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(basePage.getCurrentAddress()));
+    @And ("I should see the {string} text box")
+    public void I_should_see_the_text_box(String textBox) {
+        basePage.waitForTextBox(textBox);
     }
 
-    @And ("I should see the \"Permanent Address\" text box")
-    public void I_should_see_the_Permanent_Address_text_box() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(basePage.getPermanentAddress()));
-    }
     @And ("I should see the \"Submit\" button")
-    public void I_should_see_the_Submit_button() {
+    public void I_should_see_the_Submit_button(String btnName) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOf(basePage.getSubmitBtn()));
     }

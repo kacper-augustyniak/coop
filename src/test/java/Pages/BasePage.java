@@ -92,9 +92,15 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(getMainHeader()));
     }
 
+    public void waitForTextBoxPageIsVisible() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(getTextBoxHeader()));
+    }
+
     public void waitForElementToBeVisible(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOf(element));
+        driver.getCurrentUrl().equalsIgnoreCase(textBoxUrl);
     }
 
     public void clickElements() {
@@ -107,6 +113,22 @@ public class BasePage {
 
     public void verifyElementsPageUrl() {
         driver.getCurrentUrl().equalsIgnoreCase(elementsUrl);
+    }
+
+    public void waitForTextBox(String textBox) {
+        if (textBox.equalsIgnoreCase("Full Name")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(getFullName()));
+        } else if (textBox.equalsIgnoreCase("Email Address")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(getUserEmail()));
+        } else if (textBox.equalsIgnoreCase("Current Address")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(getCurrentAddress()));
+        } else if (textBox.equalsIgnoreCase("Permanent Address")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(getPermanentAddress()));
+        }
     }
 
 }
