@@ -18,5 +18,5 @@ Given I am on the "https://demoqa.com/" page
   And I will enter the "Email" as "name@example.com"
   And I will enter the "Current Address" as "Test Address"
   And I will enter the "Permanent Address" as "Test Address"
-  And I will click on the "Submit" button
+  And I click on the "Submit" button
   Then I should see results

@@ -42,12 +42,18 @@ public class BasePage {
     private WebElement permanentAddress;
     @FindBy (xpath = "//button[@id=\"submit\"]")
     private WebElement submitBtn;
+
+    @FindBy (xpath = "//*[@id='output']")
+    private WebElement output;
     public String getBaseUrl() {
         return baseUrl;
     }
 
     public String getElementsUrl() {
         return elementsUrl;
+    }
+    public WebElement getElementsHeader() {
+        return elementsHeader;
     }
 
     public String getTextBoxUrl() {
@@ -90,6 +96,10 @@ public class BasePage {
         return submitBtn;
     }
 
+    public WebElement getOutput() {
+        return output;
+    }
+
     public void waitForMainHeaderToBeVisible() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOf(getMainHeader()));
@@ -117,6 +127,8 @@ public class BasePage {
             getTextBoxBtn().click();
         } else if (btnName.equals("Elements")) {
             getElementsBtn().click();
+        } else if (btnName.equals("Submit")) {
+            getSubmitBtn().click();
         }
     }
 
@@ -152,6 +164,27 @@ public class BasePage {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
             wait.until(ExpectedConditions.visibilityOf(textBoxBtn));
         }
+    }
 
+    public void enterValue(String element, String input) {
+        if (element.equals("Full Name")) {
+            getFullName().clear();
+            getFullName().sendKeys(input);
+        } else if (element.equals("Email")) {
+            getUserEmail().clear();
+            getUserEmail().sendKeys(input);
+        } else if (element.equals("Current Address")) {
+            getCurrentAddress().clear();
+            getCurrentAddress().sendKeys(input);
+        } else if (element.equals("Permanent Address")) {
+            getPermanentAddress().clear();
+            getPermanentAddress().sendKeys(input);
+        }
+
+
+    }
+
+    public boolean readOutput() {
+        return getOutput().isDisplayed();
     }
 }

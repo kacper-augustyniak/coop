@@ -1,19 +1,15 @@
 package Steps;
 
 import Pages.BasePage;
-import io.cucumber.core.internal.com.fasterxml.jackson.databind.ser.Serializers;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import static org.junit.Assert.*;
 
-import java.time.Duration;
 
 public class TextBoxStepDefinition {
 
@@ -40,13 +36,12 @@ public class TextBoxStepDefinition {
     public void I_should_see_the_button(WebElement btnName) {
         basePage.waitForButton(btnName);
     }
-//    @When ("I will enter the \"Full Name\" as \"Test User\"")
-//    public void I_should_see_the_Current_Address_text_box() {
-
-//    }
-//    @And ("I will enter the \"Email\" as \"name@example.com\"")
-//    @And ("I will enter the \"Current Address\" as \"Test Address\"")
-//    @And ("I will enter the \"Permanent Address\" as \"Test Address\"")
-//    @And ("I will click on the \"Submit\" button")
-//    @Then ("I should see results")
+    @When ("I will enter the {string} as {string}")
+    public void I_will_enter_input_to_field(String element, String value) {
+        basePage.enterValue(element, value);
+    }
+    @Then ("I should see results")
+    public void I_should_see_output() {
+        assertTrue(basePage.readOutput());
+    }
 }
