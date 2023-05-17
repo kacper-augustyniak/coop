@@ -1,5 +1,7 @@
 package Steps;
 
+import Pages.BasePage;
+import io.cucumber.core.internal.com.fasterxml.jackson.databind.ser.Serializers;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,41 +18,68 @@ import java.time.Duration;
 public class TextBoxStepDefinition {
 
     private WebDriver driver = new FirefoxDriver();
+    private BasePage basePage = new BasePage(driver);
 
-    @Given("I am on the \"https://demoqa.com/\" page")
-    public void I_navigate_to_main_page() {
-        driver.get("https://demoqa.com/");
+    @Given ("I am on the {string} page")
+    public void I_am_on_the_main_page(String url) {
+        basePage.navigateToUrl(url);
     }
-
     @When ("I click on the \"Elements\" button")
-    public void I_click_on_the_Elements() {
-        driver.findElement(By.xpath("(//*[@class='card mt-4 top-card'])[1]")).click();
+    public void I_click_on_the_Elements_button() {
+       basePage.clickElements();
     }
     @Then ("I should see the \"Elements\" page")
     public void I_see_elements_page() {
-        driver.getCurrentUrl().equalsIgnoreCase("https://demoqa.com/elements");
-        driver.findElement(By.xpath("//*[@class='main-header']")).isDisplayed();
+        basePage.verifyElementsPageUrl();
+        basePage.waitForMainHeaderToBeVisible();
     }
     @And ("I should see the \"Text Box\" button")
     public void I_should_see_Text_Box_button() {
-        WebElement textbox = driver.findElement(By.xpath("//*[@id='item-0']//*[contains(text(), 'Text Box')]"));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(textbox));
+        basePage.waitForElementToBeVisible(basePage.getElementsBtn());
     }
     @When ("I click on the \"Text Box\" button")
     public void I_click_on_the_Text_Box_button() {
-        driver.findElement(By.xpath("//*[@id='item-0']//*[contains(text(), 'Text Box')]")).click();
+        basePage.getTextBoxBtn().click();
     }
-    Then I should see the "Text Box" page
-    And I should see the "Full Name" text box
-    And I should see the "Email" text box
-    And I should see the "Current Address" text box
-    And I should see the "Permanent Address" text box
-    And I should see the "Submit" button
-    When I will enter the "Full Name" as "Test User"
-    And I will enter the "Email" as "name@example.com"
-    And I will enter the "Current Address" as "Test Address"
-    And I will enter the "Permanent Address" as "Test Address"
-    And I will click on the "Submit" button
-    Then I should see results
+    @Then ("I should see the \"Text Box\" page")
+    public void I_should_see_the_Text_Box_page() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(basePage.getTextBoxHeader()));
+//        driver.getCurrentUrl().equalsIgnoreCase(textBoxUrl);
+    }
+    @And ("I should see the \"Full Name\" text box")
+    public void I_should_see_the_Full_Name_text_box() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(basePage.getFullName()));
+    }
+    @And ("I should see the \"Email\" text box")
+    public void I_should_see_the_Email_text_box() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(basePage.getUserEmail()));
+    }
+    @And ("I should see the \"Current Address\" text box")
+    public void I_should_see_the_Current_Address_text_box() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(basePage.getCurrentAddress()));
+    }
+
+    @And ("I should see the \"Permanent Address\" text box")
+    public void I_should_see_the_Permanent_Address_text_box() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(basePage.getPermanentAddress()));
+    }
+    @And ("I should see the \"Submit\" button")
+    public void I_should_see_the_Submit_button() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(basePage.getSubmitBtn()));
+    }
+//    @When ("I will enter the \"Full Name\" as \"Test User\"")
+//    public void I_should_see_the_Current_Address_text_box() {
+
+//    }
+//    @And ("I will enter the \"Email\" as \"name@example.com\"")
+//    @And ("I will enter the \"Current Address\" as \"Test Address\"")
+//    @And ("I will enter the \"Permanent Address\" as \"Test Address\"")
+//    @And ("I will click on the \"Submit\" button")
+//    @Then ("I should see results")
 }
