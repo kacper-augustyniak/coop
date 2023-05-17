@@ -32,13 +32,13 @@ public class BasePage {
     private WebElement textBoxBtn;
     @FindBy (xpath = "(//*[@class='body-height']//*[contains(text(), 'Text Box')])[1]")
     private WebElement textBoxHeader;
-    @FindBy (xpath = "//input[@id=\"userName\"]")
+    @FindBy (xpath = "//*[@id=\"userName\"]")
     private WebElement fullName;
-    @FindBy (xpath = "//input[@id=\"userEmail\"]")
+    @FindBy (xpath = "//*[@id=\"userEmail\"]")
     private WebElement userEmail;
-    @FindBy (xpath = "//input[@id=\"currentAddress\"]")
+    @FindBy (xpath = "//*[@id=\"currentAddress\"]")
     private WebElement currentAddress;
-    @FindBy (xpath = "//input[@id=\"permanentAddress\"]")
+    @FindBy (xpath = "//*[@id=\"permanentAddress\"]")
     private WebElement permanentAddress;
     @FindBy (xpath = "//button[@id=\"submit\"]")
     private WebElement submitBtn;
@@ -105,15 +105,14 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(mainHeader));
     }
 
-    public void waitUntilPageIsVisible(WebElement header) {
+    public void waitUntilPageIsVisible(String header) {
         if (header.equals("Text Box")) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.visibilityOf(textBoxHeader));
+            wait.until(ExpectedConditions.visibilityOf(getTextBoxHeader()));
         } else if (header.equals("Elements")) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.visibilityOf(elementsHeader));
+            wait.until(ExpectedConditions.visibilityOf(getElementsHeader()));
         }
-
     }
 
     public void waitForElementToBeVisible(WebElement element) {
@@ -156,7 +155,7 @@ public class BasePage {
         }
     }
 
-    public void waitForButton(WebElement btnName) {
+    public void waitForButton(String btnName) {
         if (btnName.equals("Submit")) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
             wait.until(ExpectedConditions.visibilityOf(submitBtn));
