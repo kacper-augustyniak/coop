@@ -1,13 +1,19 @@
 package Pages;
 
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+
+@Getter
 
 public class BasePage {
 
@@ -21,7 +27,14 @@ public class BasePage {
     private String elementsUrl = "https://demoqa.com/elements";
     private String textBoxUrl = "https://demoqa.com/text-box";
 
-    @FindBy (xpath = "(//*[@class='card mt-4 top-card'])[1]")
+    @FindAll({
+            @FindBy(how = How.CSS, using = "div.element-group")
+    })
+    private List<WebElement> leftMenuElements;
+    @FindBy(how = How.CSS, using = "ul.menu-list li#item-1")
+    private WebElement elementButton;
+
+    @FindBy (how = How.XPATH, using = "//*[@class='card mt-4 top-card']")
     private WebElement elementsBtn;
     @FindBy (xpath = "//*[@class='main-header']")
     private WebElement mainHeader;
@@ -45,6 +58,8 @@ public class BasePage {
 
     @FindBy (xpath = "//*[@id='output']")
     private WebElement output;
+
+
     public String getBaseUrl() {
         return baseUrl;
     }
@@ -62,10 +77,6 @@ public class BasePage {
 
     public WebElement getElementsBtn() {
         return elementsBtn;
-    }
-
-    public WebElement getMainHeader() {
-        return mainHeader;
     }
 
     public WebElement getTextBoxBtn() {
@@ -96,9 +107,6 @@ public class BasePage {
         return submitBtn;
     }
 
-    public WebElement getOutput() {
-        return output;
-    }
 
     public void waitForMainHeaderToBeVisible() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -106,6 +114,7 @@ public class BasePage {
     }
 
     public void waitUntilPageIsVisible(String header) {
+
         if (header.equals("Text Box")) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
             wait.until(ExpectedConditions.visibilityOf(getTextBoxHeader()));
@@ -183,7 +192,4 @@ public class BasePage {
 
     }
 
-    public boolean readOutput() {
-        return getOutput().isDisplayed();
-    }
 }
