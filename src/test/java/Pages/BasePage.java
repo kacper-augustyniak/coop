@@ -25,6 +25,9 @@ public class BasePage {
     private WebElement elementsBtn;
     @FindBy (xpath = "//*[@class='main-header']")
     private WebElement mainHeader;
+
+    @FindBy (xpath = "(//*[contains(text(), 'Elements')])[2]")
+    private WebElement elementsHeader;
     @FindBy (xpath = "//*[@id='item-0']//*[contains(text(), 'Text Box')]")
     private WebElement textBoxBtn;
     @FindBy (xpath = "(//*[@class='body-height']//*[contains(text(), 'Text Box')])[1]")
@@ -92,9 +95,15 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(getMainHeader()));
     }
 
-    public void waitForTextBoxPageIsVisible() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(getTextBoxHeader()));
+    public void waitUntilPageIsVisible(WebElement header) {
+        if (header.equals("Text Box")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(textBoxHeader));
+        } else if (header.equals("Elements")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(elementsHeader));
+        }
+
     }
 
     public void waitForElementToBeVisible(WebElement element) {
@@ -103,8 +112,12 @@ public class BasePage {
         driver.getCurrentUrl().equalsIgnoreCase(textBoxUrl);
     }
 
-    public void clickElements() {
-        getElementsBtn().click();
+    public void click(String btnName) {
+        if (btnName.equals("Text Box")) {
+            getTextBoxBtn().click();
+        } else if (btnName.equals("Elements")) {
+            getElementsBtn().click();
+        }
     }
 
     public void navigateToUrl(String url) {
@@ -131,4 +144,14 @@ public class BasePage {
         }
     }
 
+    public void waitForButton(WebElement btnName) {
+        if (btnName.equals("Submit")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(submitBtn));
+        } else if (btnName.equals("Text Box")) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(textBoxBtn));
+        }
+
+    }
 }

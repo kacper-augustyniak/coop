@@ -24,36 +24,21 @@ public class TextBoxStepDefinition {
     public void I_am_on_the_main_page(String url) {
         basePage.navigateToUrl(url);
     }
-    @When ("I click on the \"Elements\" button")
-    public void I_click_on_the_Elements_button() {
-       basePage.clickElements();
+    @When ("I click on the {string} button")
+    public void I_click_on_the_Elements_button(String btnName) {
+       basePage.click(btnName);
     }
-    @Then ("I should see the \"Elements\" page")
-    public void I_see_elements_page() {
-        basePage.verifyElementsPageUrl();
-        basePage.waitForMainHeaderToBeVisible();
-    }
-    @And ("I should see the \"Text Box\" button")
-    public void I_should_see_Text_Box_button() {
-        basePage.waitForElementToBeVisible(basePage.getElementsBtn());
-    }
-    @When ("I click on the \"Text Box\" button")
-    public void I_click_on_the_Text_Box_button() {
-        basePage.getTextBoxBtn().click();
-    }
-    @Then ("I should see the \"Text Box\" page")
-    public void I_should_see_the_Text_Box_page() {
-        basePage.waitForTextBoxPageIsVisible();
+    @Then ("I should see the {string} page")
+    public void I_should_see_the_page(WebElement header) {
+        basePage.waitUntilPageIsVisible(header);
     }
     @And ("I should see the {string} text box")
     public void I_should_see_the_text_box(String textBox) {
         basePage.waitForTextBox(textBox);
     }
-
-    @And ("I should see the \"Submit\" button")
-    public void I_should_see_the_Submit_button(String btnName) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(basePage.getSubmitBtn()));
+    @And ("I should see the {string} button")
+    public void I_should_see_the_button(WebElement btnName) {
+        basePage.waitForButton(btnName);
     }
 //    @When ("I will enter the \"Full Name\" as \"Test User\"")
 //    public void I_should_see_the_Current_Address_text_box() {
