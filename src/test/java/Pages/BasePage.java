@@ -102,7 +102,7 @@ public class BasePage {
 
     public void waitForMainHeaderToBeVisible() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(getMainHeader()));
+        wait.until(ExpectedConditions.visibilityOf(mainHeader));
     }
 
     public void waitUntilPageIsVisible(WebElement header) {

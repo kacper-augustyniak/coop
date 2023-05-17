@@ -19,9 +19,10 @@ public class TextBoxStepDefinition {
     @Given ("I am on the {string} page")
     public void I_am_on_the_main_page(String url) {
         basePage.navigateToUrl(url);
+        basePage.waitForMainHeaderToBeVisible();
     }
     @When ("I click on the {string} button")
-    public void I_click_on_the_Elements_button(String btnName) {
+    public void I_click_on_the_button(String btnName) {
        basePage.click(btnName);
     }
     @Then ("I should see the {string} page")
